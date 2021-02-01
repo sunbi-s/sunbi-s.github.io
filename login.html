@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+  <title>Login</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="tri" onclick="location.href='homepage.html'"></div>
+    <div class="box">
+      <form action="javascript:saveUserBook();" id="userForm" method="GET" >
+        <div class="text">
+        <label>ID</label>
+        <br>
+        <input type="text" class="input" id="userId">
+        <br>
+        <label>Name</label>
+        <br>
+        <input type="text" class="input" id="userName">
+        <br>
+        <label>Password</label>
+        <br>
+        <input type="password" class="input" id="userPassword">
+        <br>
+        <label>Password Check</label>
+        <br>
+        <input type="password" class="input" id="pwdCheck" >
+        </div> 
+    </div>
+      <input type="submit" value="Sign Up" id="sign">
+    </form>
+
+     <script>
+       //db에 저장
+       function saveUserBook(){
+    var UserBook = new UserBook($(userId).val(), $(userPassword).val(), $(userName).val());
+
+    //기존데이터 가져오기. 존재하지 않을때만 새배열 생성
+    var arr = JSON.parse(localStorage.getItem("arr"));
+    if(arr == null) arr = [];
+    arr.push(UserBook);
+    console.log(UserBook);
+
+    //배열로 저장
+    var jsonStr = JSON.stringify(arr);
+    localStorage.setItem("arr", jsonStr);
+
+      function UserBook(Id, Password, Name){
+        this.Id = Id;
+        this.Password = Password
+        this.name = Name;        
+      }
+      alert("Registered")
+      location.href="homepage.html"
+    }
+    //유효성 검사
+    var form = document.querySelector("#userForm")
+    form.onsubmit = function(){
+          //1. id 검사
+          if(userId.value.length < 4){
+                alert("ID must be at least 4 characters");
+                
+                userId.select();
+                return false;//조기리턴 
+            }
+             //2. Name 검사
+             if(userName.value.length < 2){
+                alert("Name must be at least 2 characters");
+                
+                userName.select();
+                return false;//조기리턴 
+            }
+
+            //3. 비밀번호 검사 : 4글자 이상 && (pwd.value == pwdCheck.value)
+            if(userPassword.value.length < 4){
+                alert("Password must be at least 4 characters.");
+                userPassword.select();
+                return false;
+            }
+
+            if(userPassword.value != pwdCheck.value){
+                alert("Passwords do not match");
+                userPassword.value='';//초기화
+                pwdCheck.value='';//초기화
+                userPassword.focus();
+                return false;
+            }
+            return true;
+    }
+    </script>
+    
+    <style>
+         @import url(https://fonts.googleapis.com/css?family=Playfair+Display);
+        html {
+        box-sizing: border-box;
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+        line-height: 1.6;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        color: rgb(119, 34, 6);
+        }
+        #sign:focus{
+          outline:none;
+        }
+        #sign{
+          font-family: "Playfair Display", serif;
+          border: none;
+          background-color: rgb(59, 51, 48, 0);
+          color: rgb(253, 234, 228);
+          font-size: 40px;
+          position: relative;
+          left: 400px;
+          bottom: 40px;
+        }
+        .tri {
+                position: absolute;
+                top: 20px;
+                left: 40px;
+                width: 0px;
+                height: 0px;
+                border-top: 15px solid transparent;
+                border-right: 30px solid rgb(148, 91, 17);
+                border-bottom: 15px solid transparent;
+              }
+        input:focus {outline:1px solid #f5d9bf;}
+        .input{
+            height: 22px;
+            position: relative;
+            margin-left: 50px;
+            background-color: rgb(252, 243, 231);
+            font-size: 20px;
+            border: 1px solid rgb(245, 191, 171);
+
+        }
+         label{
+           position: relative;
+           margin-left: 50px;
+        
+        }
+        body {
+        margin: 0;
+        padding: 0;
+           background-image: url(./photo/table.jpg);
+      }
+      
+      .box {
+        position: relative;
+        margin: 100px;
+        margin-left: 200px;
+        width: 360px;
+        height: 400px;
+        background: rgb(247, 241, 236);
+        border-radius: 2px;
+      }
+      
+      .box::before,
+      .box::after {
+        content: '';
+        position: absolute;
+        bottom: 10px;
+        width: 40%;
+        height: 10px;
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.7);
+        z-index: -1;
+                transition: all .3s ease-in-out;
+      }
+      
+      .box::before {
+        left: 15px;
+                transform: skew(-50deg) rotate(-5deg);
+      }
+      
+      .box::after {
+        right: 15px;
+                transform: skew(5deg) rotate(5deg);
+      }
+      
+      .box:hover::before,
+      .box:hover::after {
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+      }
+      
+      .box:hover::before {
+        left: 5px;
+      }
+      
+      .box:hover::after {
+        right: 5px;
+      }
+       </style>
+</body>
+</html>

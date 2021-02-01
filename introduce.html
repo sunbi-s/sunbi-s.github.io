@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduce</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.blast/2.0.0/jquery.blast.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.velocity/0.11.9/jquery.velocity.min.js"></script>
+</head>
+<body class="test">
+    <main>
+        <div class="tri" onclick="location.href='homepage.html'"></div>
+        <p class="haunted-text" id="data-haunted-text"> 
+            Age: 27 <br>Name: Chung Insic <br> 
+            Motto : Nor again is there anyone who loves or pursues or desires to obtain pain of itself because it is pain
+             </p>
+     </main>
+</body>
+   
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Playfair+Display);
+        html {
+        box-sizing: border-box;
+        font-family: "Playfair Display", serif;
+        font-size: 10px;
+        line-height: 1.6;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        }
+        .tri {
+                position: absolute;
+                top: 20px;
+                left: 40px;
+                width: 0px;
+                height: 0px;
+                border-top: 15px solid transparent;
+                border-right: 30px solid rgb(180, 110, 19);
+                border-bottom: 15px solid transparent;
+                z-index: 10;
+              }
+
+        *, *::before, *::after {
+        box-sizing: inherit;
+        }
+        html,
+        body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        color: #ffffff;
+        background:radial-gradient( rgb(233, 168, 95), rgb(100, 62, 5))   
+       }
+
+        main {
+        min-width: 900px;
+        min-height: 500px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        }
+        .haunted-text {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        width: 40%;
+        max-width: 680px;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        font-size: 2.4rem;
+        line-height: 1.4;
+        text-align: center;
+        display: none;
+        }
+        .haunted-text .blast {
+        will-change: opacity, filter;
+        }
+      </style>
+ 
+    <script>
+        var $hauntedText = $("#data-haunted-text");
+        var maxDuration = 2000;
+        var maxDelay = 1000;
+        var minDuration = maxDuration - maxDelay;
+
+        $hauntedText.blast({
+            delimiter: 'character',
+            });
+        
+            setTimeout(function() {
+            $hauntedText.find('.blast').each(function(i, el) {
+                var $el = $(el);
+
+                var duration = getRandomValue(minDuration, maxDuration);
+                var delay = maxDuration - duration
+                // From
+                $el.velocity({
+                opacity: 0,
+                }, {
+                duration: 0,
+                });
+                // To
+                $el.velocity({
+                opacity: 0.9,
+                }, {
+                duration: duration,
+                delay: delay,
+                ease: [250, 0],
+                });
+            });
+        $hauntedText.css("display","block");
+        }, 200);
+       
+       
+
+        var getRandomValue = function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</html>
